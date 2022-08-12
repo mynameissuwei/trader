@@ -1,5 +1,6 @@
 import easytrader
 from scrapy import getData
+from send import send_message
 
 def ranking(df,condition1='premium_rt'):
     NUM = 10
@@ -27,14 +28,24 @@ user.prepare(
 )
 # 打印账户
 # print(user.balance)
+# print(user.position,'position')
+currentData = list(map(lambda x:x['stock_code'],user.position))
 # 打印持仓
 # print(user.position)
 df = getData()
 df = ranking(df)
+dfName = list(df['bond_nm'])
 df = getName(list(df['bond_id']))
 
-# 调仓
-# user.adjust_weight('SZ123111', 0)
-# user.adjust_weight('SZ128014', 100)
-for x in df:
-  user.adjust_weight(x, 10)
+removeData = list(set(currentData).difference(set(df)))
+
+# for x in removeData:
+#   user.adjust_weight(x, 0)
+# for x in df:
+#   user.adjust_weight(x, 10)
+userId = ['SuWei','DanErShenYang','BaoChiBengGan']
+
+for item in userId:
+  send_message('测试一下' + ','.join(dfName),item)
+
+
