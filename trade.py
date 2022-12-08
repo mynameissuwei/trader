@@ -49,6 +49,7 @@ buyData =  list(set(df).difference(set(currentData)))
 print(currentData,'currentData')
 for x in currentData:
   user.adjust_weight(x, 0)
+# user.adjust_weight('SH512690', 10)
 for x in df:
   user.adjust_weight(x, 10)
 
