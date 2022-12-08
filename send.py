@@ -25,7 +25,6 @@ def send_message(_message,userId):
     }
     json_str = json.dumps(json_dict)
     response_send = requests.post(f"https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={access_token}", data=json_str)
-    print(response_send.text,'json_str')
     return json.loads(response_send.text)['errmsg'] == 'ok'
 
 

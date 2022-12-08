@@ -22,16 +22,15 @@ def getName(data):
 user = easytrader.use('xq')
 # 初始化信息
 user.prepare(
-  cookies='device_id=bcffa4f5bde5109e6bd563dbee92085b; s=dg15btnbrl; xq_a_token=b3b57cd5d04fc38f27643d826d635b8883e70838; xqat=b3b57cd5d04fc38f27643d826d635b8883e70838; xq_r_token=a4f252fa5d01c9e356a2e4aade41c0d0f6444bfa; xq_id_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1aWQiOjg2NzQ2MDE2MDYsImlzcyI6InVjIiwiZXhwIjoxNjYyMTg0MTk5LCJjdG0iOjE2NTk1OTIxOTkzOTksImNpZCI6ImQ5ZDBuNEFadXAifQ.p_M5v47Uf7aEbHBTEMxMQizYelklWspwU31qRfX5DImP1yftQTOQeCGJBRg4mN72FjJn5RbjGwn42zYY6hOaz4N2f8kcWkkkKhijdkQ57VWemdiwYoCo-nzUNkPJgkkTfjwV6SkQzjN-daaQX8J217d0qPGSbRoxtH2jZGPT8rUFa5ziiTZKgxiHekCNKfOmyCQyf0STCzI36GXy6AvTTNf0bN5HNpk-8ldWloD4BbQLYu4rH1s9rryLZ-QjWiGTgIS0GgAb_-RT763JLBWTcm10S87JlobHqS5H5oN-0DWGyyL_H8gB40Sv75VG0JOB2C3U3jnHJ91hUgyh4eHbBg; xq_is_login=1; u=8674601606; bid=2a430e784436d90c894fa77e3fed0d71_l6emd53p; Hm_lvt_1db88642e346389874251b5a1eded6e3=1659592051,1660274508; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1660274508',
+  cookies='Hm_lvt_1db88642e346389874251b5a1eded6e3=1670309701; device_id=5f22847ae9031689d81505e66b19a7b6; acw_tc=276077a816704692117161232e654217f5394ee7e89e764b36547eb3953413; s=cl1z8sd4r2; xq_a_token=9add626bc70c0775e19e573b1d90de6ca6d137bb; xqat=9add626bc70c0775e19e573b1d90de6ca6d137bb; xq_r_token=e8cf2c2e8dfaa0b6532b0db80de837953114efed; xq_id_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1aWQiOjg2NzQ2MDE2MDYsImlzcyI6InVjIiwiZXhwIjoxNjczMDYxMjI3LCJjdG0iOjE2NzA0NjkyMjc0NTcsImNpZCI6ImQ5ZDBuNEFadXAifQ.LJ5B-IUmgLvd-mNH2kB36CqtY246wRDqmR2-ycnBY6ixoZFl0N0d1tB3f3T6QVBt97aLkic92Nelc9xxtpXpaGXLVmebIpF-LIiXQgykdfqBb_-sEtxAmq0m_4N7NOOFdM3bP_dgSgDfvcd1ZoPszQ4j8F7E5eO6bp_LfU2GiZ1_bXN0Mh4-y0yB2ia3VfqN360aXhEWpbAiwlaCdpmi1XMhTMuhpfQlgASMtb9kLHXiwTlCjQDzIGFT8fFjNccz4lsLCFzccepb7vLj0PWbIRVf6-4DuxNCSX6phmI_uK14onocnmO5nWB54o7axz42FzVfpKCDIZxyvZdrgwI9fw; xq_is_login=1; u=8674601606; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1670469370',
   portfolio_code='ZH2476354',  
   portfolio_market='cn'
 )
 # 打印账户
-print(user.balance)
 # print(user.position,'position')
+# print(user.balance)
 currentData = list(map(lambda x:x['stock_code'],user.position))
 # 打印持仓
-# print(user.position)
 df = getData()
 df = ranking(df)
 dfName = list(df['bond_nm'])
@@ -40,7 +39,8 @@ df = getName(list(df['bond_id']))
 removeData = list(set(currentData).difference(set(df)))
 buyData =  list(set(df).difference(set(currentData)))
 
-for x in removeData:
+print(currentData,'currentData')
+for x in currentData:
   user.adjust_weight(x, 0)
 for x in df:
   user.adjust_weight(x, 10)
