@@ -24,10 +24,25 @@ jobs:
 
     - name: Install PyExecJS
       run: pip3 install PyExecJS
+    
+    - name: Install openpyxl
+      run: pip3 install openpyxl
 
     - name: Run trade.py
       run: python3 trade.py
 
+    - name: Commit
+      run: |
+        git config --global user.email 910933955@qq.com
+        git config --global user.name mynameissuwei
+        git add .
+        git commit -m"action:`date`"
+        git pull --rebase
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Failure test
       if: failure()
