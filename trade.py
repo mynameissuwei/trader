@@ -28,7 +28,7 @@ user.prepare(
 )
 # 打印账户
 # print(user.position,'position')
-# print(user.balance)
+print(user.balance)
 currentData = list(map(lambda x:x['stock_code'],user.position))
 # 打印持仓
 df = getData()
