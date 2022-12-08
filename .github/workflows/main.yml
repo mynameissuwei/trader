@@ -18,32 +18,10 @@ jobs:
       
       
     - name: Install Dependence
-      run: pip install requests-html pytz
-    - name: Run pa.py
-      run: python pa.py
-    - name: Run pa2.py
-      run: python pa2.py
-    - name: list
-      run: ls
-      
-    - name: Setup Node.js for use with actions
-      uses: actions/setup-node@v2.4.0
-    - name: Install Dependence
-      run: npm install
-    - name: Markdown to HTML
-      run: node md2html.js
-    - name: remove titles.md
-      run: |
-        rm titles.md
+      run: pip install requirements.txt
+    - name: Run trade.py
+      run: python trade.py
 
-    
-    - name: Upload to this repo
-      run: |
-        git config --global user.name "growvv"
-        git config --global user.email "2092876368@qq.com"
-        git add index.html  record.html record.md && echo A
-        git commit -m 'upload pa result' && echo B
-        git push -u origin master && echo C
         
     - name: Failure test
       if: failure()
