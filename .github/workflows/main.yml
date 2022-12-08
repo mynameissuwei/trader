@@ -21,7 +21,7 @@ jobs:
       
     - name: Install Dependence
       run: pip3 install easytrader
-      run: pip3 install PyExecJS
+           pip3 install PyExecJS
 
     - name: Run trade.py
       run: python3 trade.py
