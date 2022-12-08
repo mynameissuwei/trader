@@ -47,11 +47,22 @@ removeData = list(set(currentData).difference(set(df)))
 buyData =  list(set(df).difference(set(currentData)))
 
 print(currentData,'currentData')
+print(df,'dffff')
 for x in currentData:
-  user.adjust_weight(x, 0)
+  try:
+    user.adjust_weight(x, 0)
+  except Exception:
+    print('asdfasdfasfd')
+    user.adjust_weight('SH512690', 10)
 # user.adjust_weight('SH512690', 10)
 for x in df:
-  user.adjust_weight(x, 10)
+  print(x,'xxxxx')
+  try:
+    user.adjust_weight(x, 10)
+  except Exception:
+    print('asdfasdfasfd')
+    user.adjust_weight('SH512690', 10)
+
 
 # userId = ['SuWei','DanErShenYang','BaoChiBengGan','MaoXiaoMao','life']
 userId = ['SuWei']
