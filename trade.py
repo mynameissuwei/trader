@@ -1,6 +1,9 @@
 import easytrader
 from scrapy import getData
 from send import send_message
+import pandas as pd
+import datetime
+
 
 def ranking(df,condition1='premium_rt'):
     NUM = 10
@@ -33,6 +36,10 @@ currentData = list(map(lambda x:x['stock_code'],user.position))
 # 打印持仓
 df = getData()
 df = ranking(df)
+today = datetime.datetime.now().strftime('%Y%m%d')
+writer = pd.ExcelWriter('jsl_{}.xlsx'.format(today))
+df.to_excel(writer,'低溢价')
+
 dfName = list(df['bond_nm'])
 df = getName(list(df['bond_id']))
 
@@ -48,6 +55,14 @@ for x in df:
 userId = ['SuWei','DanErShenYang','BaoChiBengGan','MaoXiaoMao','life']
 
 text1 = " 组合收益率: %.2f%% \n 组合雪球链接 %s \n 今日卖出: %s \n 今日买进: %s \n 当前持仓: %s" % (user.balance[0]['asset_balance'] / 10000,'https://xueqiu.com/P/ZH2476354',','.join(removeData),','.join(buyData),','.join(dfName))
+
+try:
+    writer.save()
+except Exception as e:
+    print(e)
+else:
+    print('导出excel成功')
+    
 # for item in userId:
 #   send_message(text1,item)
 
