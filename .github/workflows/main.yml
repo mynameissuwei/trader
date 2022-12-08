@@ -19,8 +19,11 @@ jobs:
         python-version: '3.8'
       
       
-    - name: Install Dependence
+    - name: Install easytrader
       run: pip3 install easytrader
+
+    - name: Install PyExecJS
+      run: pip3 install PyExecJS
 
     - name: Run trade.py
       run: python3 trade.py
