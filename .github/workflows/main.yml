@@ -9,6 +9,8 @@ on:
      - cron: '0 4 * * *'
      - cron: '0 5 * * *'
   push:
+  workflow_dispatch:
+
 
 jobs:
   job_1:
