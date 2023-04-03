@@ -1,12 +1,3 @@
-'''
-Author: your name
-Date: 2023-03-31 16:36:14
-LastEditTime: 2023-03-31 16:36:15
-LastEditors: CN-MBP-C02Y84D6JG5H
-Description: In User Settings Edit
-FilePath: /python-/Users/monica/Desktop/trader/ninwen.py
-'''
-
 # 宁稳网
 import json
 import random
