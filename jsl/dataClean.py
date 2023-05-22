@@ -30,7 +30,7 @@ def ranking_low_small_dblow(df,condition1='curr_iss_amt',condition2='premium_rt'
 
 # 低溢价
 def ranking_low(df,condition1='premium_rt'):
-    NUM = 10
+    NUM = 18
     df = df.sort_values(by=condition1,ascending=True)[:NUM]
     return df
 

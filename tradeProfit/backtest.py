@@ -17,11 +17,11 @@ from loguru import logger as log
 
 pd.set_option('display.max_rows', None)
 
-CSV_PATH = '../data/merge_bond_info-2023-04-03.csv'
+CSV_PATH = '../data/2017-2022-08-25日线数据.csv'
 HOLD_NUM = 10  # 持有个数
 
 START_DATE = '2018-01-01'
-END_DATE = '2022-09-03'
+END_DATE = '2022-08-25'
 
 FREQ = 1  # 5天轮动一次 轮动频率
 
@@ -159,8 +159,8 @@ class BackTrade:
                      'lowprice': self.condition_low_price}
         self.func = func_dict.get(condition)
 
+    # 剔除当日涨停的转债，买不入
     def unpossibile(self, df, date):
-        # 剔除当日涨停的转债，买不入
         raise_limited_dict = {
             '2022-04-08': ['127057', ],
             '2022-07-27': ['127065', ],
@@ -172,6 +172,7 @@ class BackTrade:
 
         return df.drop(index=target_list, axis=1)
 
+    # 判断强赎的日期
     def last_day_exclude_v1(self):
         last_day_calendar_dict={}
         for code,sub_df in self.source.groupby('tickerBond'):
@@ -180,26 +181,21 @@ class BackTrade:
             if date!=END_DATE:
                 last_day_calendar_dict.setdefault(date,[])
                 last_day_calendar_dict[date].append(code)
-
-
         return last_day_calendar_dict
 
-
+    # 过滤条件，可添加多个条件
     def filters(self, df, today):
-        # 过滤条件，可添加多个条件
-
         df = self.unpossibile(df, today)
         df = self.exclude_last(df, today)
         df = remain_size_filter.apply(df)
         price_drop_code = price_drop_filter.apply(date=today)
-
         origin_index = df.index.tolist()
         same_code = list(set(origin_index) & set(price_drop_code))
         df = df.loc[same_code]
         return df
 
+    # 强赎最后一天卖出
     def exclude_last(self, df, today):
-
         if today in self.last_day_dict:
             for item in self.last_day_dict[today]:
                 df = df.drop(index=item, axis=1)
@@ -209,6 +205,7 @@ class BackTrade:
     def logprint(self, current):
         log.info('当前日期{}'.format(current))
 
+    # 进行轮动循环
     def run(self):
         for current in self.date_list:
 
@@ -305,6 +302,7 @@ class BackTrade:
         target = df.sort_values('closePriceBond', ascending=True)
         return target
 
+    # 目标list和当前持仓list进行对比 如果不在目标list中则进行卖出买进操作 并计算收益率 最大回撤率
     def strategy(self, current_day_df, date):
         current_day_df = current_day_df.set_index('tickerBond', drop=False)
 
@@ -368,6 +366,7 @@ class BackTrade:
 
         self.display_position(target_name_dict)
 
+    # 打印持仓信息
     def display_position(self,name_dict):
         log.info('持仓信息')
         log.info('='*20)
